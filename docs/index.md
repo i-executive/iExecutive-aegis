@@ -31,10 +31,10 @@ aegisは以下のサブシステムから構成される。ただし、全て新
 - 開発者向けサイト作成 GitHub Pages
 - www.dev.iexecutive.orgのDNS作成
 - aegisの基本アーキテクチャの作成
-- ブロックチェーンの試作
-  - ブロックチェーンのデータ構造とaegisのデータ構造のマッピングドラフトを作成
-- private blockchainの動作環境の構築
-　　　- azure VMに構築
+- ブロックチェーンの試作  
+  * ブロックチェーンのデータ構造とaegisのデータ構造のマッピングドラフトを作成
+- private blockchainの動作環境の構築  
+  * azure VMに構築
    
 ## メンバー
 
