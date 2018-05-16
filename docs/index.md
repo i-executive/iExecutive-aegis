@@ -1,4 +1,4 @@
-# aegis@iExecutive
+# aegis @ iExecutive
 
 改ざん防止文書管理システム
 
@@ -26,14 +26,19 @@ aegisは以下のサブシステムから構成される。ただし、全て新
 - document repository : 文書保管
 - document manager : 見える化
 
+## sub projects
+
+1. [文書管理システム](https://www.dev.iexecutive.org/)
+1. [Ethereumを用いてブロックチェーンの機能・実装方法の検証](https://github.com/i-executive/inspect-ethereum)
+
 ## TODO
 
-- 開発者向けサイト作成 GitHub Pages
-- www.dev.iexecutive.orgのDNS作成
-- aegisの基本アーキテクチャの作成
-- ブロックチェーンの試作  
+- [ ] 開発者向けサイト作成 GitHub Pages
+- [ ] DNS設定 www.dev.iexecutive.org を　”A” レコードで登録する
+- [ ] aegisの基本アーキテクチャの作成
+- [ ] ブロックチェーンの試作  
   * ブロックチェーンのデータ構造とaegisのデータ構造のマッピングドラフトを作成
-- private blockchainの動作環境の構築  
+- [ ] private blockchainの動作環境の構築  
   * azure VMに構築
    
 ## メンバー
