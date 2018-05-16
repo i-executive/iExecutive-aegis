@@ -28,7 +28,7 @@ aegisは以下のサブシステムから構成される。ただし、全て新
 
 ## sub projects
 
-1. [文書管理システム](https://www.dev.iexecutive.org/)
+1. [文書管理システム](https://www.dev.iexecutive.org/)(ここ)
 1. [Ethereumを用いてブロックチェーンの機能・実装方法の検証](https://github.com/i-executive/inspect-ethereum)
 
 ## TODO
