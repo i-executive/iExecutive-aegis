@@ -33,8 +33,8 @@ aegisは以下のサブシステムから構成される。ただし、全て新
 
 ## TODO
 
-- [ ] 開発者向けサイト作成 GitHub Pages
-- [ ] DNS設定 www.dev.iexecutive.org を　”A” レコードで登録する
+- [x] 開発者向けサイト作成 GitHub Pages
+- [x] DNS設定 www.dev.iexecutive.org を　”A” レコードで登録する
 - [ ] aegisの基本アーキテクチャの作成
 - [ ] ブロックチェーンの試作  
   * ブロックチェーンのデータ構造とaegisのデータ構造のマッピングドラフトを作成
