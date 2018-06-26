@@ -41,6 +41,11 @@ aegisは以下のサブシステムから構成される。ただし、全て新
 - [ ] private blockchainの動作環境の構築  
   * azure VMに構築
    
+## 検証環境
+[検証環境](environments.md)
+
+aesisの評価用のネットワークを構築している。VPNで接続して利用する。
+
 ## メンバー
 
   [メンバー一覧](members.html)
