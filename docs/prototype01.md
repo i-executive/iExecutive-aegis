@@ -102,6 +102,9 @@ blockchain上の台帳で管理するシステムです。
             - document revision
             - document hash
 
+            何にサインするか？
+                - 関係者がサインする。何をドキュメントの情報に対して？
+
         - sign document
             - signer's publkey, sign
             - new status
@@ -237,8 +240,9 @@ blockchain上の台帳で管理するシステムです。
     4. 上記情報とドキュメントのオーナーのEOAを含めたデータにsign(web3.eth.sign)
     5. document signing system contractのregisterDocumentをcall(というかsendTransaction)
     6. contractではsignとドキュメント情報のhashからEOAを検証
-    7. ドキュメントIDを生成（何らかのロジックで...>> signatureでいいかな) : トランザクションは確か復帰情報が返せないので、呼び出し元でも把握できる値である必要がありそう
-    
+    7. ドキュメントIDを生成（何らかのロジックで...>> signatureでいいかな) : トランザクションは確か復帰情報が返せないので、
+       呼び出し元でも把握できる値である必要がありそう
+      
     8. ドキュメントIDをキーにmappingにドキュメント情報を登録する
 
 
@@ -276,3 +280,110 @@ blockchain上の台帳で管理するシステムです。
 ## 文書トランザクションを取得
 
 - getDocument( docId)
+
+
+## 2018/6/30 A.I.
+
+- prototyping 
+
+    - Accountから文書アイテムの登録
+    - Smart Contractの作成
+        - ブロックチェーンへの記録
+        - ブロックチェーンからItemベースの情報取得
+
+    - 外部システムに頼らざるを得ない部分の見極め
+        - 文書リスト自体は管理できるが一覧を返すのは苦手らしいので、全体管理は外部システム化が望ましい
+        - 文書ID等のマスタ
+
+        signer{
+            address: account,
+            bytes: sign
+        }
+
+        document : {
+            string uri:
+            string revision:
+            bytes32 document hash:
+            addoress owner: EOA
+            signer owners: <- document ハッシュに対してサインする
+
+            signer: []
+
+        }
+
+
+## sha3() vs keccak256()
+
+keccak256(string, string ...) = eth.sha3(eth.fromUtf8(string)+eth.fromUtf8(string).substr(2)...)
+
+
+## util.registerDoc()
+```js
+function registerDoc( _uri, _rev, _document, _account, stamp){
+    var doc_id = web3.sha3( web3.fromUtf8(_uri)+web3.fromUtf8(_rev).substr(2), {encoding:'hex'});
+    var docHash = web3.sha3(_document);
+    var sig = eth.sign(_account, doc_id);
+    stamp.registerDocument.sendTransaction(_uri, _rev, docHash, _account, sig, {from: eth.coinbase, gas: 1000000});
+
+    return( doc_id);
+}
+
+function signDoc( _docId, _account, stamp){
+    var doc = stamp.getDocument(_docId);
+
+    var dh = doc[3];
+    var sig = eth.sign(_account, dh);
+    stamp.signDocument.sendTransaction(_docId, _account, sig, {from: eth.coinbase, gas: 1000000});
+
+    return( _docId);
+}
+
+
+function getSigners( _docId, stamp){
+    var list = stamp.getDocumentSigners(_docId);
+
+    return( list);
+}
+
+
+function validateSigner( _docId, _account, stamp){
+    var status = stamp.validateSign(_docId, _account);;
+
+    return( status);
+}
+
+// function validateSigner( _docId, stamp){
+//     var status = stamp.validateSign.sendTransaction(_docId,  {from: eth.coinbase, gas: 1000000});;
+
+//     return( status);
+// }
+```
+## demo用の情報
+
+
+## script
+
+registerDoc( "https://aegis.com/12", "222", "今日はSocial Hackday です。", eth.coinbase, st);
+
+registerDoc( "https://aegis.com/20180630", "C4Jhackday01", "今日はSocial Hackday です。", eth.coinbase, st);
+registerDoc( "https://aegis.com/20180703", "C4Jhackday02", "今日はSocial Hackday です。", eth.coinbase, st);
+registerDoc( "https://aegis.com/20180705", "C4Jhackday03", "今日はSocial Hackday です。", eth.coinbase, st);
+
+signDoc("", eth.coinbse, st);
+signDoc(, eth.accounts[1], st);
+
+
+signDoc("0x5a5f422616558ced2fda9c30f5bd40eedf032cbda4f4d7ef5c88d7d8a677abc5", eth.coinbase, st);
+signDoc("0x5a5f422616558ced2fda9c30f5bd40eedf032cbda4f4d7ef5c88d7d8a677abc5", eth.accounts[1], st);
+
+
+
+### document id
+0x6e8c30abea6205c995650bae9f3752f48e470580423a666a782f07099941c7cc
+0x5a5f422616558ced2fda9c30f5bd40eedf032cbda4f4d7ef5c88d7d8a677abc5
+0xc2a3d469964f7e7dfaa65f6b5871ab060542389ab809dfc1d9a962ffc9e19107
+
+["0xde8224f6f48537014015bc012831dc51487bfb33", "0x6827e72497a7ed122a67de25906e284af680ca0c"]
+
+
+
